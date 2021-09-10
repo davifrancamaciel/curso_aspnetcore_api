@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Security.Policy;
 using System.Threading.Tasks;
 using Api.Domain.Entities;
 using Api.Domain.Interfaces.Services.User;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Application.Controllers
 {
@@ -22,6 +19,7 @@ namespace Api.Application.Controllers
             _service = service;
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
@@ -36,11 +34,12 @@ namespace Api.Application.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError,
+                return StatusCode((int)HttpStatusCode.InternalServerError,
                 e.Message);
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("{id}", Name = "GetWithId")]
         public async Task<ActionResult> Get(Guid id)
@@ -56,11 +55,12 @@ namespace Api.Application.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError,
+                return StatusCode((int)HttpStatusCode.InternalServerError,
                 e.Message);
             }
         }
 
+        [Authorize("Bearer")]
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] UserEntity request)
         {
@@ -78,11 +78,12 @@ namespace Api.Application.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError,
+                return StatusCode((int)HttpStatusCode.InternalServerError,
                 e.Message);
             }
         }
 
+        [Authorize("Bearer")]
         [HttpPut]
         public async Task<ActionResult> Put([FromBody] UserEntity request)
         {
@@ -98,11 +99,12 @@ namespace Api.Application.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError,
+                return StatusCode((int)HttpStatusCode.InternalServerError,
                 e.Message);
             }
         }
 
+        [Authorize("Bearer")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<ActionResult> Delete(Guid id)
@@ -118,7 +120,7 @@ namespace Api.Application.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError,
+                return StatusCode((int)HttpStatusCode.InternalServerError,
                 e.Message);
             }
         }

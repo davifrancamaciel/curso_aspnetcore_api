@@ -17,14 +17,27 @@ namespace Api.Domain.Models
             get { return _name; }
             set { _name = value; }
         }
-        
+
         private string _email;
         public string Email
         {
             get { return _email; }
             set { _email = value; }
         }
-        
-        
+
+        private DateTime _createAt;
+        public DateTime CreateAt
+        {
+            get { return _createAt; }
+            set { _createAt = value == null ? DateTime.UtcNow : value; }
+        }
+
+        private DateTime _updateAt;
+        public DateTime UpdateAt
+        {
+            get { return _updateAt; }
+            set { _updateAt = DateTime.UtcNow; }
+        }
+
     }
 }

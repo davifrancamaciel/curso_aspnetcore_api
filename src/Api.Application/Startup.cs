@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using Api.Data.Context;
 using Api.CrossCutting.Mappings;
 using AutoMapper;
 
@@ -152,11 +153,21 @@ namespace application
 
             app.UseAuthorization();
 
-            app
-                .UseEndpoints(endpoints =>
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+            if (Environment.GetEnvironmentVariable("MIGRATION").ToUpper().Equals("APLICAR"))
+            {
+                using (var service = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
-                    endpoints.MapControllers();
-                });
+                    using (var context = service.ServiceProvider.GetService<MyContext>())
+                    {
+                        context.Database.Migrate();
+                    }
+                }
+            }
         }
     }
 }

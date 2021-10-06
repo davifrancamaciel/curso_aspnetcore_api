@@ -45,6 +45,16 @@ namespace Data.Migrations
                         .IsUnique();
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("bd530264-fcf5-4065-bcab-025151d4bae4"),
+                            CreateAt = new DateTime(2021, 10, 5, 20, 24, 22, 624, DateTimeKind.Local).AddTicks(415),
+                            Email = "adm@adm.com.br",
+                            Name = "Davi administrador",
+                            UpdateAt = new DateTime(2021, 10, 5, 20, 24, 22, 625, DateTimeKind.Local).AddTicks(8414)
+                        });
                 });
 #pragma warning restore 612, 618
         }

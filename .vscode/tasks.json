@@ -8,6 +8,8 @@
             "args": [
                 "build",
                 "${workspaceFolder}/src/Api.Application/Application.csproj",
+                //"${workspaceFolder}/src/Api.Data.Test/Api.Data.Test.csproj",
+              
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

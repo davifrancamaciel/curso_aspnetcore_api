@@ -8,8 +8,7 @@
             "args": [
                 "build",
                 "${workspaceFolder}/src/Api.Application/Application.csproj",
-                //"${workspaceFolder}/src/Api.Data.Test/Api.Data.Test.csproj",
-              
+                
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -39,6 +38,25 @@
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Data.Tests",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "test",               
+                "${workspaceFolder}/src/Api.Data.Test/Api.Data.Test.csproj",               
+            ],            
+        },
+        {
+            "label": "Service.Tests",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "test",               
+                "${workspaceFolder}/src/Api.Service.Test/Api.Service.Test.csproj",               
+            ],            
         }
+
     ]
 }

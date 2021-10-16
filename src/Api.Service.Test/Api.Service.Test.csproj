@@ -9,8 +9,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.19" />
-    <PackageReference Include="Faker.NETCore" Version="1.0.2" />
+    <PackageReference Include="Moq" Version="4.16.1" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />   
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -22,10 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Api.Data\Data.csproj" />
+    <ProjectReference Include="..\Api.Service\Service.csproj" />
     <ProjectReference Include="..\Api.Domain\Domain.csproj" />
     <ProjectReference Include="..\Api.CrossCutting\CrossCutting.csproj" />
-    <!-- <ProjectReference Include="..\Api.Application\application.csproj" /> -->
   </ItemGroup>
 
 </Project>

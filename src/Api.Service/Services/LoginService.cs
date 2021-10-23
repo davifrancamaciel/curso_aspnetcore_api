@@ -79,7 +79,8 @@ namespace Api.Service.Services
             };
         }
 
-        private object SuccessObject(
+        private object
+        SuccessObject(
             DateTime createDate,
             DateTime expirationDate,
             string token,
@@ -97,7 +98,8 @@ namespace Api.Service.Services
             };
         }
 
-        private string CreateToken(
+        private string
+        CreateToken(
             ClaimsIdentity identity,
             DateTime createDate,
             DateTime expirationDate,

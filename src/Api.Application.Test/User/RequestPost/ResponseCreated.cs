@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using Api.Application.Controllers;
 using Api.Domain.DTOs.User;

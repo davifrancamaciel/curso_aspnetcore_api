@@ -20,20 +20,16 @@ namespace Api.Service.Services
 
         private SigningConfigurations _signingConfigurations;
 
-        private TokenConfigurations _tokenConfigurations;
-
         private IConfiguration _configuration;
 
         public LoginService(
             IUserRepository repository,
             SigningConfigurations signingConfigurations,
-            TokenConfigurations tokenConfigurations,
             IConfiguration configuration
         )
         {
             _repository = repository;
             _signingConfigurations = signingConfigurations;
-            _tokenConfigurations = tokenConfigurations;
             _configuration = configuration;
         }
 
@@ -46,7 +42,7 @@ namespace Api.Service.Services
                 if (baseUser == null)
                     return new {
                         authenticated = false,
-                        MessageProcessingHandler = "Falha ao autenticar"
+                        message = "Falha ao autenticar"
                     };
 
                 var identity =
@@ -61,7 +57,10 @@ namespace Api.Service.Services
                 var createDate = DateTime.Now;
                 var expirationDate =
                     createDate +
-                    TimeSpan.FromSeconds(_tokenConfigurations.Seconds);
+                    TimeSpan
+                        .FromSeconds(Convert
+                            .ToInt32(Environment
+                                .GetEnvironmentVariable("Seconds")));
 
                 var handler = new JwtSecurityTokenHandler();
                 var token =
@@ -75,7 +74,7 @@ namespace Api.Service.Services
 
             return new {
                 authenticated = false,
-                MessageProcessingHandler = "Falha ao autenticar"
+                message = "Falha ao autenticar"
             };
         }
 
@@ -94,7 +93,7 @@ namespace Api.Service.Services
                 accessToken = token,
                 userName = user.Name,
                 userEmail = user.Email,
-                MessageProcessingHandler = "Usuário logado com sucesso"
+                message = "Usuário logado com sucesso"
             };
         }
 
@@ -109,8 +108,9 @@ namespace Api.Service.Services
             var securityToken =
                 handler
                     .CreateToken(new SecurityTokenDescriptor {
-                        Issuer = _tokenConfigurations.Issuer,
-                        Audience = _tokenConfigurations.Audience,
+                        Issuer = Environment.GetEnvironmentVariable("Issuer"),
+                        Audience =
+                            Environment.GetEnvironmentVariable("Audience"),
                         SigningCredentials =
                             _signingConfigurations.SigningCredentials,
                         Subject = identity,

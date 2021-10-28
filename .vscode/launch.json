@@ -22,11 +22,14 @@
 			},
 			"env": {
 				"ASPNETCORE_ENVIRONMENT": "Development",
-				"DB_CONNECTION_MYSQL": "Server=localhost;Port=3306;Database=dbAPI1;Uid=root;Pwd=86801qaz",
+				"DB_CONNECTION_MYSQL": "Persist Security Info=True;Server=localhost;Port=3306;Database=dbAPI1;Uid=root;Pwd=86801qaz",
 				"DB_CONNECTION_MYSQL_TEST": "Persist Security Info=True;Server=localhost;Port=3306;Database=DATABASE_TEST_NAME;Uid=root;Pwd=86801qaz",
 				"DB_CONNECTION_SQLSERVER": "Server=.\\SQLEXPRESS2017;Database=dbAPI;User Id=sa;Password=8680",
 				"DATABASE": "MYSQL",
-				"MIGRATION": "NAO_APLICAR"
+				"MIGRATION": "NAO_APLICAR",
+				"Audience": "ExemploAudience",
+				"Issuer": "ExemploIssuer",
+				"Seconds": "28800"
 			},
 			"sourceFileMap": {
 				"/Views": "${workspaceFolder}/Views"
@@ -46,7 +49,7 @@
 			"program": "${workspaceFolder}/src/Api.Data.Test/bin/Debug/net5.0/Api.Data.Test.dll",
 			"env": {
 				"ASPNETCORE_ENVIRONMENT": "Development",
-				"DB_CONNECTION_MYSQL": "Server=localhost;Port=3306;Database=dbAPI1;Uid=root;Pwd=86801qaz",
+				"DB_CONNECTION_MYSQL": "Persist Security Info=True;Server=localhost;Port=3306;Database=dbAPI1;Uid=root;Pwd=86801qaz",
 				"DB_CONNECTION_MYSQL_TEST": "Persist Security Info=True;Server=localhost;Port=3306;Database=DATABASE_TEST_NAME;Uid=root;Pwd=86801qaz",
 				"DB_CONNECTION_SQLSERVER": "Server=.\\SQLEXPRESS2017;Database=dbAPI;User Id=sa;Password=8680",
 				"DATABASE": "MYSQL",

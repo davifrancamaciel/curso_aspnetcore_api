@@ -1,10 +1,10 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Api.Domain.Interfaces.Services.User;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using Api.Domain.DTOs.User;
+using Api.Domain.Interfaces.Services.User;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Application.Controllers
 {
@@ -34,7 +34,7 @@ namespace Api.Application.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError,
+                return StatusCode((int) HttpStatusCode.InternalServerError,
                 e.Message);
             }
         }
@@ -51,11 +51,15 @@ namespace Api.Application.Controllers
 
             try
             {
-                return Ok(await _service.Get(id));
+                var result = await _service.Get(id);
+                
+                if (result == null) return NotFound();
+                
+                return Ok(result);
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError,
+                return StatusCode((int) HttpStatusCode.InternalServerError,
                 e.Message);
             }
         }
@@ -78,7 +82,7 @@ namespace Api.Application.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError,
+                return StatusCode((int) HttpStatusCode.InternalServerError,
                 e.Message);
             }
         }
@@ -99,7 +103,7 @@ namespace Api.Application.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError,
+                return StatusCode((int) HttpStatusCode.InternalServerError,
                 e.Message);
             }
         }
@@ -120,7 +124,7 @@ namespace Api.Application.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError,
+                return StatusCode((int) HttpStatusCode.InternalServerError,
                 e.Message);
             }
         }

@@ -40,53 +40,39 @@ namespace Api.Service.Services
             {
                 baseUser = await _repository.FindByLogin(user.Email);
                 if (baseUser == null)
-                    return new {
+                    return new
+                    {
                         authenticated = false,
                         message = "Falha ao autenticar"
                     };
 
-                var identity =
-                    new ClaimsIdentity(new GenericIdentity(user.Email),
-                        new []
+                var identity = new ClaimsIdentity(new GenericIdentity(user.Email),
+                        new[]
                         {
-                            new Claim(JwtRegisteredClaimNames.Jti,
-                                Guid.NewGuid().ToString()),
-                            new Claim(JwtRegisteredClaimNames.UniqueName,
-                                user.Email)
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim(JwtRegisteredClaimNames.UniqueName, user.Email)
                         });
                 var createDate = DateTime.Now;
-                var expirationDate =
-                    createDate +
-                    TimeSpan
-                        .FromSeconds(Convert
-                            .ToInt32(Environment
-                                .GetEnvironmentVariable("Seconds")));
+                var expirationDate = createDate + TimeSpan.FromSeconds(Convert.ToInt32(Environment.GetEnvironmentVariable("Seconds")));
 
                 var handler = new JwtSecurityTokenHandler();
-                var token =
-                    CreateToken(identity, createDate, expirationDate, handler);
+                var token = CreateToken(identity, createDate, expirationDate, handler);
 
-                return SuccessObject(createDate,
-                expirationDate,
-                token,
-                baseUser);
+                return SuccessObject(createDate, expirationDate, token, baseUser);
             }
 
-            return new {
+            return new
+            {
                 authenticated = false,
                 message = "Falha ao autenticar"
             };
         }
 
         private object
-        SuccessObject(
-            DateTime createDate,
-            DateTime expirationDate,
-            string token,
-            UserEntity user
-        )
+        SuccessObject(DateTime createDate, DateTime expirationDate, string token, UserEntity user)
         {
-            return new {
+            return new
+            {
                 authenticated = true,
                 created = createDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 expiration = expirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
@@ -98,16 +84,12 @@ namespace Api.Service.Services
         }
 
         private string
-        CreateToken(
-            ClaimsIdentity identity,
-            DateTime createDate,
-            DateTime expirationDate,
-            JwtSecurityTokenHandler handler
-        )
+        CreateToken(ClaimsIdentity identity, DateTime createDate, DateTime expirationDate, JwtSecurityTokenHandler handler)
         {
             var securityToken =
                 handler
-                    .CreateToken(new SecurityTokenDescriptor {
+                    .CreateToken(new SecurityTokenDescriptor
+                    {
                         Issuer = Environment.GetEnvironmentVariable("Issuer"),
                         Audience =
                             Environment.GetEnvironmentVariable("Audience"),

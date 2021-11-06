@@ -1,4 +1,5 @@
 using System;
+using Api.Data.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -11,10 +12,10 @@ namespace Api.Data.Context
             //Usado para Criar as Migrações
             var optionsBuilder = new DbContextOptionsBuilder<MyContext>();
 
-            if (Environment.GetEnvironmentVariable("DATABASE").ToUpper().Equals("MYSQL"))
-                optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("DB_CONNECTION_MYSQL"));
+            if (Constants.DataBase.ToUpper().Equals("MYSQL"))
+                optionsBuilder.UseMySql(Constants.ConnectionStringMySql);
             else
-                optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("DB_CONNECTION_SQLSERVER"));
+                optionsBuilder.UseSqlServer(Constants.ConnectionStringSqlServer);
 
             return new MyContext(optionsBuilder.Options);
         }

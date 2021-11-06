@@ -14,6 +14,7 @@ namespace Api.Service.Services
     public class UserService : IUserService
     {
         private IRepository<UserEntity> _repository;
+
         private readonly IMapper _mapper;
 
         public UserService(IRepository<UserEntity> repository, IMapper mapper)
@@ -30,7 +31,7 @@ namespace Api.Service.Services
         public async Task<UserDTO> Get(Guid id)
         {
             var entity = await _repository.SelectAsync(id);
-            return _mapper.Map<UserDTO>(entity) ?? new UserDTO();
+            return _mapper.Map<UserDTO>(entity); // ?? new UserDTO();
         }
 
         public async Task<IEnumerable<UserDTO>> GetAll()

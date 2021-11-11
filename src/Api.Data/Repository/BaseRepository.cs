@@ -25,19 +25,17 @@ namespace Api.Data.Repository
         {
             try
             {
-                 var result =
-                    await _dataset
-                        .SingleOrDefaultAsync(i => i.Id.Equals(id));
+                var result = await _dataset.SingleOrDefaultAsync(i => i.Id.Equals(id));
                 if (result == null) return false;
 
                 _dataset.Remove(result);
 
-                 await _context.SaveChangesAsync();
-                 return true;
+                await _context.SaveChangesAsync();
+                return true;
             }
             catch (Exception ex)
             {
-                 throw ex;
+                throw ex;
             }
         }
 
@@ -48,7 +46,7 @@ namespace Api.Data.Repository
                 if (item.Id == Guid.Empty) item.Id = Guid.NewGuid();
 
                 item.CreateAt = DateTime.UtcNow;
-                _dataset.Add (item);
+                _dataset.Add(item);
 
                 await _context.SaveChangesAsync();
             }
@@ -63,8 +61,7 @@ namespace Api.Data.Repository
         {
             try
             {
-                return await _dataset
-                        .SingleOrDefaultAsync(i => i.Id.Equals(id));
+                return await _dataset.SingleOrDefaultAsync(i => i.Id.Equals(id));
             }
             catch (Exception ex)
             {
@@ -93,14 +90,12 @@ namespace Api.Data.Repository
         {
             try
             {
-                var result =
-                    await _dataset
-                        .SingleOrDefaultAsync(i => i.Id.Equals(item.Id));
+                var result = await _dataset.SingleOrDefaultAsync(i => i.Id.Equals(item.Id));
                 if (result == null) return null;
 
                 item.CreateAt = result.CreateAt;
                 item.UpdateAt = DateTime.UtcNow;
-               _context.Entry(result).CurrentValues.SetValues(item);
+                _context.Entry(result).CurrentValues.SetValues(item);
 
                 await _context.SaveChangesAsync();
             }

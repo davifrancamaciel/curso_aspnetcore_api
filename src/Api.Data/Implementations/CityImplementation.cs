@@ -19,12 +19,12 @@ namespace Api.Data.Implementations
             _dataset = _context.Set<CityEntity>();
         }
 
-        public async Task<CityEntity> GetFullByIBGE(int codeIBGE)
+        public async Task<CityEntity> GetCompleteByIBGE(int codeIBGE)
         {
             return await _dataset.Include(s => s.State).FirstOrDefaultAsync(x => x.IbgeId == codeIBGE);
         }
 
-        public async Task<CityEntity> GetFullById(Guid id)
+        public async Task<CityEntity> GetCompleteById(Guid id)
         {
             return await _dataset.Include(s => s.State).FirstOrDefaultAsync(x => x.Id == id);
         }

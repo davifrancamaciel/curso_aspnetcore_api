@@ -28,7 +28,7 @@ namespace Api.Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<CityFullDTO> GetFullById()
+        public Task<CityFullDTO> GetFullById(Guid id)
         {
             throw new NotImplementedException();
         }

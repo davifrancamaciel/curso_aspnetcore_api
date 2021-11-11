@@ -7,8 +7,8 @@ namespace Api.Domain.Repository
 {
     public interface ICityRepository : IRepository<CityEntity>
     {
-        Task<CityEntity> GetFullById(Guid id);
+        Task<CityEntity> GetCompleteById(Guid id);
 
-        Task<CityEntity> GetFullByIBGE(int codeIBGE);
+        Task<CityEntity> GetCompleteByIBGE(int codeIBGE);
     }
 }

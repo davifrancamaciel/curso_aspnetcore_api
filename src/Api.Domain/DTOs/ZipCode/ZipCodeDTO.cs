@@ -15,6 +15,6 @@ namespace Api.Domain.DTOs.ZipCode
 
         public Guid CityId { get; set; }
 
-        public CityFullDTO City { get; set; }
+        public CityCompleteDTO City { get; set; }
     }
 }

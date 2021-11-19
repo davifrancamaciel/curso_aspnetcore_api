@@ -17,7 +17,7 @@ namespace Api.Domain.Models
             set { _adress = value; }
         }
         private string _number;
-        public string Nuber
+        public string Number
         {
             get { return _number; }
             set { _number = string.IsNullOrWhiteSpace(value) ? "S/N" : value; }

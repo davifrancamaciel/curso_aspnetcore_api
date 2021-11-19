@@ -9,9 +9,9 @@ namespace Api.Domain.Interfaces.Services.City
     {
         Task<CityDTO> Get(Guid Id);
 
-        Task<CityFullDTO> GetFullById(Guid id);
+        Task<CityCompleteDTO> GetFullById(Guid id);
 
-        Task<CityFullDTO> GetFullByIBGE(int codeIBGE);
+        Task<CityCompleteDTO> GetFullByIBGE(int codeIBGE);
 
         Task<IEnumerable<CityDTO>> GetAll();
 

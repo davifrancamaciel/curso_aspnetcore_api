@@ -2,40 +2,64 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Domain.DTOs.ZipCode;
+using Api.Domain.Entities;
 using Api.Domain.Interfaces.Services.ZipCode;
+using Api.Domain.Models;
+using Api.Domain.Repository;
+using AutoMapper;
 
 namespace Api.Service.Services
 {
     public class ZipCodeService : IZipCodeService
     {
-        public Task<bool> Delete(Guid Id)
+        private IZipCodeRepository _repository;
+        private readonly IMapper _mapper;
+
+        public ZipCodeService(IZipCodeRepository repository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _repository = repository;
+            _mapper = mapper;
         }
 
-        public Task<ZipCodeDTO> Get(Guid id)
+        public async Task<bool> Delete(Guid Id)
         {
-            throw new NotImplementedException();
+            return await _repository.DeleteAsync(Id);
         }
 
-        public Task<ZipCodeDTO> Get(string zipCode)
+        public async Task<ZipCodeDTO> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var entity = await _repository.SelectAsync(id);
+            return _mapper.Map<ZipCodeDTO>(entity);
         }
 
-        public Task<IEnumerable<ZipCodeDTO>> GetAll()
+        public async Task<ZipCodeDTO> Get(string zipCode)
         {
-            throw new NotImplementedException();
+            var entity = await _repository.SelectAsync(zipCode);
+            return _mapper.Map<ZipCodeDTO>(entity);
         }
 
-        public Task<ZipCodeCreateResultDTO> Post(ZipCodeCreateDTO model)
+        public async Task<IEnumerable<ZipCodeDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            var entity = await _repository.SelectAsync();
+            return _mapper.Map<IEnumerable<ZipCodeDTO>>(entity);
         }
 
-        public Task<ZipCodeUpdateResultDTO> Put(ZipCodeUpdateDTO model)
+        public async Task<ZipCodeCreateResultDTO> Post(ZipCodeCreateDTO zipCode)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<ZipCodeModel>(zipCode);
+            var entity = _mapper.Map<ZipCodeEntity>(model);
+            var result = await _repository.InsertAsync(entity);
+
+            return _mapper.Map<ZipCodeCreateResultDTO>(result);
+        }
+
+        public async Task<ZipCodeUpdateResultDTO> Put(ZipCodeUpdateDTO zipCode)
+        {
+            var model = _mapper.Map<ZipCodeModel>(zipCode);
+            var entity = _mapper.Map<ZipCodeEntity>(model);
+            var result = await _repository.UpdateAsync(entity);
+
+            return _mapper.Map<ZipCodeUpdateResultDTO>(result);
         }
     }
 }

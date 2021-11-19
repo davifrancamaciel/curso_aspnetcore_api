@@ -2,45 +2,69 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Domain.DTOs.City;
+using Api.Domain.Entities;
 using Api.Domain.Interfaces.Services.City;
+using Api.Domain.Models;
+using Api.Domain.Repository;
+using AutoMapper;
 
 namespace Api.Service.Services
 {
     public class CityService : ICityService
     {
-        public Task<bool> Delete(Guid Id)
+
+        private ICityRepository _repository;
+        private readonly IMapper _mapper;
+        public CityService(ICityRepository repository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _repository = repository;
+            _mapper = mapper;
+        }
+        public async Task<bool> Delete(Guid Id)
+        {
+            return await _repository.DeleteAsync(Id);
         }
 
-        public Task<CityDTO> Get(Guid Id)
+        public async Task<CityDTO> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var entity = await _repository.SelectAsync(id);
+            return _mapper.Map<CityDTO>(entity);
         }
 
-        public Task<IEnumerable<CityDTO>> GetAll()
+        public async Task<IEnumerable<CityDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            var entity = await _repository.SelectAsync();
+            return _mapper.Map<IEnumerable<CityDTO>>(entity);
         }
 
-        public Task<CityFullDTO> GetFullByIBGE(int codeIBGE)
+        public async Task<CityCompleteDTO> GetFullByIBGE(int codeIBGE)
         {
-            throw new NotImplementedException();
+            var entity = await _repository.GetCompleteByIBGE(codeIBGE);
+            return _mapper.Map<CityCompleteDTO>(entity);
         }
 
-        public Task<CityFullDTO> GetFullById(Guid id)
+        public async Task<CityCompleteDTO> GetFullById(Guid id)
         {
-            throw new NotImplementedException();
+            var entity = await _repository.GetCompleteById(id);
+            return _mapper.Map<CityCompleteDTO>(entity);
         }
 
-        public Task<CityCreateResultDTO> Post(CityCreateDTO model)
+        public async Task<CityCreateResultDTO> Post(CityCreateDTO city)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<CityModel>(city);
+            var entity = _mapper.Map<CityEntity>(model);
+            var result = await _repository.InsertAsync(entity);
+
+            return _mapper.Map<CityCreateResultDTO>(result);
         }
 
-        public Task<CityUpdateResultDTO> Put(CityUpdateDTO model)
+        public async Task<CityUpdateResultDTO> Put(CityUpdateDTO city)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<CityModel>(city);
+            var entity = _mapper.Map<CityEntity>(model);
+            var result = await _repository.UpdateAsync(entity);
+
+            return _mapper.Map<CityUpdateResultDTO>(result);
         }
     }
 }

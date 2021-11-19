@@ -10,8 +10,8 @@ namespace Api.Service.Test.AutoMapper
 {
     public class UserMapper : BaseTestService
     {
-        [Fact(DisplayName = "É possivel mapear os modelos")]
-        public async Task ModelMappersUsers()
+        [Fact(DisplayName = "É possivel mapear os modelos de usuários")]
+        public void ModelMappersUsers()
         {
             var model =
                 new UserModel {
@@ -45,11 +45,11 @@ namespace Api.Service.Test.AutoMapper
             Assert.Equal(model.UpdateAt, entity.UpdateAt);
 
             // model para dto
-            var userDto = Mapper.Map<UserDTO>(entity);
-            Assert.Equal(entity.Id, userDto.Id);
-            Assert.Equal(entity.Name, userDto.Name);
-            Assert.Equal(entity.Email, userDto.Email);
-            Assert.Equal(entity.CreateAt, userDto.CreateAt);
+            var dto = Mapper.Map<UserDTO>(entity);
+            Assert.Equal(entity.Id, dto.Id);
+            Assert.Equal(entity.Name, dto.Name);
+            Assert.Equal(entity.Email, dto.Email);
+            Assert.Equal(entity.CreateAt, dto.CreateAt);
 
             var listDto = Mapper.Map<List<UserDTO>>(entityList);
             Assert.True(entityList.Count == listDto.Count);
@@ -75,11 +75,11 @@ namespace Api.Service.Test.AutoMapper
             Assert.Equal(userDtoUpdateResult.UpdateAt, entity.UpdateAt);
 
             //dto para model
-            var userModel = Mapper.Map<UserModel>(userDto);
-            Assert.Equal(userModel.Id, userDto.Id);
-            Assert.Equal(userModel.Name, userDto.Name);
-            Assert.Equal(userModel.Email, userDto.Email);
-            Assert.Equal(userModel.CreateAt, userDto.CreateAt);
+            var userModel = Mapper.Map<UserModel>(dto);
+            Assert.Equal(userModel.Id, dto.Id);
+            Assert.Equal(userModel.Name, dto.Name);
+            Assert.Equal(userModel.Email, dto.Email);
+            Assert.Equal(userModel.CreateAt, dto.CreateAt);
 
             var userDtoCreate = Mapper.Map<UserCreateDTO>(userModel);
             Assert.Equal(userDtoCreate.Name, userModel.Name);

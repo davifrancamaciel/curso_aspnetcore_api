@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Api.Domain.DTOs.ZipCode;
 using Api.Domain.DTOs.State;
+using Api.Domain.DTOs.City;
 
 namespace Api.Service.Test.ZipCode
 {
@@ -16,26 +17,28 @@ namespace Api.Service.Test.ZipCode
 
         public static string Number { get; set; }
         public static string NumberUpdate { get; set; }
-        
+
         public static Guid CityId { get; set; }
 
 
         public List<ZipCodeDTO> listDto = new List<ZipCodeDTO>();
-        public ZipCodeDTO ZipCodeDto;
-        public ZipCodeCompleteDTO ZipCodeCompleteDto;
-        public ZipCodeCreateDTO ZipCodeCreateDto;
-        public ZipCodeUpdateResultDTO ZipCodeUpdateResultDto;
-        public ZipCodeUpdateDTO ZipCodeUpdateDto;
-        public ZipCodeCreateResultDTO ZipCodeCreateResultDto;
+        public ZipCodeDTO zipCodeDto;
+        public ZipCodeCreateDTO zipCodeCreateDto;
+        public ZipCodeCreateResultDTO zipCodeCreateResultDto;
+        public ZipCodeUpdateDTO zipCodeUpdateDto;
+        public ZipCodeUpdateResultDTO zipCodeUpdateResultDto;
 
         public ZipCodeTests()
         {
             Id = Guid.NewGuid();
-            Name = Faker.Address.ZipCode();
-            NameUpdate = Faker.Address.ZipCode();
-            IbgeId = Faker.RandomNumber.Next(1, 1000);
-            IbgeIdUpdate = Faker.RandomNumber.Next(1, 1000);
-            StateId = Guid.NewGuid();
+            ZipCode = Faker.Address.ZipCode();
+            Adress = Faker.Address.StreetName();
+            Number = Faker.RandomNumber.Next(1, 1000).ToString();
+            CityId = Guid.NewGuid();
+
+            ZipCodeUpdate = Faker.Address.ZipCode();
+            AdressUpdate = Faker.Address.StreetName();
+            NumberUpdate = Faker.RandomNumber.Next(1, 1000).ToString();
 
 
             for (var i = 0; i < 10; i++)
@@ -43,64 +46,84 @@ namespace Api.Service.Test.ZipCode
                 var dto = new ZipCodeDTO
                 {
                     Id = Guid.NewGuid(),
-                    Name = Faker.Address.ZipCode(),
-                    IbgeId = Faker.RandomNumber.Next(1, 1000),
-                    StateId = Guid.NewGuid(),
+                    ZipCode = Faker.Address.ZipCode(),
+                    Adress = Faker.Address.StreetName(),
+                    Number = Faker.RandomNumber.Next(1, 1000).ToString(),
+                    CityId = Guid.NewGuid(),
+                    City = new CityCompleteDTO
+                    {
+                        Id = Id,
+                        IbgeId = Faker.RandomNumber.Next(1, 1000),
+                        Name = Faker.Address.City(),
+                        StateId = Guid.NewGuid(),
+                        State = new StateDTO
+                        {
+                            Id = Guid.NewGuid(),
+                            Sigla = Faker.Address.UsState().Substring(1, 3),
+                            Name = Faker.Address.UsState()
+                        }
+                    }
                 };
                 listDto.Add(dto);
             }
 
-            ZipCodeDto = new ZipCodeDTO
+            zipCodeDto = new ZipCodeDTO
             {
                 Id = Id,
-                IbgeId = IbgeId,
-                Name = Name,
-                StateId = StateId
-            };
-
-            ZipCodeCompleteDto = new ZipCodeCompleteDTO
-            {
-                Id = Id,
-                IbgeId = IbgeId,
-                Name = Name,
-                StateId = StateId,
-                State = new StateDTO
+                ZipCode = ZipCode,
+                Adress = Adress,
+                Number = Number,
+                CityId = CityId,
+                City = new CityCompleteDTO
                 {
-                    Id = Guid.NewGuid(),
-                    Sigla = Faker.Address.UsState().Substring(1, 3),
-                    Name = Faker.Address.UsState()
+                    Id = CityId,
+                    IbgeId = Faker.RandomNumber.Next(1, 1000),
+                    Name = Faker.Address.City(),
+                    StateId = Guid.NewGuid(),
+                    State = new StateDTO
+                    {
+                        Id = Guid.NewGuid(),
+                        Sigla = Faker.Address.UsState().Substring(1, 3),
+                        Name = Faker.Address.UsState()
+                    }
                 }
             };
 
-            ZipCodeCreateDto = new ZipCodeCreateDTO
+
+
+            zipCodeCreateDto = new ZipCodeCreateDTO
             {
-                IbgeId = IbgeId,
-                Name = Name,
-                StateId = StateId
+                ZipCode = ZipCode,
+                Adress = Adress,
+                Number = Number,
+                CityId = CityId,
             };
 
-            ZipCodeCreateResultDto = new ZipCodeCreateResultDTO
+            zipCodeCreateResultDto = new ZipCodeCreateResultDTO
             {
                 Id = Id,
-                IbgeId = IbgeId,
-                Name = Name,
-                StateId = StateId,
+                ZipCode = ZipCode,
+                Adress = Adress,
+                Number = Number,
+                CityId = CityId,
                 CreateAt = DateTime.UtcNow
             };
-            ZipCodeUpdateDto = new ZipCodeUpdateDTO
+            zipCodeUpdateDto = new ZipCodeUpdateDTO
             {
                 Id = Id,
-                IbgeId = IbgeId,
-                Name = Name,
-                StateId = StateId
+                ZipCode = ZipCodeUpdate,
+                Adress = AdressUpdate,
+                Number = NumberUpdate,
+                CityId = CityId,
             };
 
-            ZipCodeUpdateResultDto = new ZipCodeUpdateResultDTO
+            zipCodeUpdateResultDto = new ZipCodeUpdateResultDTO
             {
                 Id = Id,
-                IbgeId = IbgeId,
-                Name = Name,
-                StateId = StateId,
+                ZipCode = ZipCodeUpdate,
+                Adress = AdressUpdate,
+                Number = NumberUpdate,
+                CityId = CityId,
                 UpdateAt = DateTime.UtcNow
             };
         }

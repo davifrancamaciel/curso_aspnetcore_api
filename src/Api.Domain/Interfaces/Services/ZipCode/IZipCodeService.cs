@@ -11,8 +11,6 @@ namespace Api.Domain.Interfaces.Services.ZipCode
 
         Task<ZipCodeDTO> Get(string zipCode);
 
-        Task<IEnumerable<ZipCodeDTO>> GetAll();
-
         Task<ZipCodeCreateResultDTO> Post(ZipCodeCreateDTO model);
 
         Task<ZipCodeUpdateResultDTO> Put(ZipCodeUpdateDTO model);

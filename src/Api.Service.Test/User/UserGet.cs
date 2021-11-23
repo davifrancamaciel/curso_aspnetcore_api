@@ -22,18 +22,18 @@ namespace Api.Service.Test.User
 
             var result = await _service.Get(UserId);
 
-            Assert.NotNull (result);
+            Assert.NotNull(result);
             Assert.True(result.Id == UserId);
             Assert.Equal(Name, result.Name);
 
             _serviceMock = new Mock<IUserService>();
             _serviceMock
                 .Setup(x => x.Get(It.IsAny<Guid>()))
-                .Returns(Task.FromResult((UserDTO) null));
+                .Returns(Task.FromResult((UserDTO)null));
             _service = _serviceMock.Object;
 
             var _record = await _service.Get(UserId);
-            Assert.Null (_record);
+            Assert.Null(_record);
         }
     }
 }

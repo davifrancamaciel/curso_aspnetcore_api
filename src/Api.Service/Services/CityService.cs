@@ -37,13 +37,13 @@ namespace Api.Service.Services
             return _mapper.Map<IEnumerable<CityDTO>>(entity);
         }
 
-        public async Task<CityCompleteDTO> GetFullByIBGE(int codeIBGE)
+        public async Task<CityCompleteDTO> GetCompleteByIBGE(int codeIBGE)
         {
             var entity = await _repository.GetCompleteByIBGE(codeIBGE);
             return _mapper.Map<CityCompleteDTO>(entity);
         }
 
-        public async Task<CityCompleteDTO> GetFullById(Guid id)
+        public async Task<CityCompleteDTO> GetCompleteById(Guid id)
         {
             var entity = await _repository.GetCompleteById(id);
             return _mapper.Map<CityCompleteDTO>(entity);

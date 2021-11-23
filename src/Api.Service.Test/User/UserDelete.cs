@@ -13,7 +13,7 @@ namespace Api.Service.Test.User
 
         private Mock<IUserService> _serviceMock;
 
-        [Fact(DisplayName = "É possivel executar o método get")]
+        [Fact(DisplayName = "É possivel executar o método delete")]
         public async Task DeleteUsers()
         {
             _serviceMock = new Mock<IUserService>();
@@ -24,7 +24,7 @@ namespace Api.Service.Test.User
 
             var result = await _service.Delete(UserId);
 
-            Assert.True(result);            
+            Assert.True(result);
         }
     }
 }

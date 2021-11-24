@@ -27,7 +27,11 @@ namespace Api.Application.Controllers
 
             try
             {
-                return Ok(await _service.GetAll());
+                var result = await _service.GetAll();
+                if (result == null)
+                    return NotFound();
+
+                return Ok(result);
             }
             catch (ArgumentException e)
             {

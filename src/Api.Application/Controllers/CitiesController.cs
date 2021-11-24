@@ -77,6 +77,7 @@ namespace Api.Application.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("by-ibge/{ibgeCode}")]
         public async Task<ActionResult> GetCompleteByIBGE(int ibgeCode)

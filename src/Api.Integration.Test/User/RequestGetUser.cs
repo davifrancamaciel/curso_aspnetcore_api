@@ -28,14 +28,12 @@ namespace Api.Integration.Test.User
             var userDto = new UserDTO { Name = _name, Email = _email };
 
             //Post
-            var response =
-                await PostJsonAsync(userDto, $"{hostApi}/users", client);
+            var response = await PostJsonAsync(userDto, $"{hostApi}/users", client);
             var postResult = await response.Content.ReadAsStringAsync();
-            var userCreateResult =
-                JsonConvert.DeserializeObject<UserCreateResultDTO>(postResult);
+            var userCreateResult = JsonConvert.DeserializeObject<UserCreateResultDTO>(postResult);
 
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-            Assert.NotNull (userCreateResult);
+            Assert.NotNull(userCreateResult);
             Assert.Equal(userCreateResult.Name, _name);
             Assert.Equal(userCreateResult.Email, _email);
             Assert.True(userCreateResult.Id != Guid.Empty);
@@ -45,30 +43,23 @@ namespace Api.Integration.Test.User
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
             var jsonResult = await response.Content.ReadAsStringAsync();
-            var listFromJson =
-                JsonConvert.DeserializeObject<IEnumerable<UserDTO>>(jsonResult);
-            Assert.NotNull (listFromJson);
+            var listFromJson = JsonConvert.DeserializeObject<IEnumerable<UserDTO>>(jsonResult);
+            Assert.NotNull(listFromJson);
             Assert.True(listFromJson.Any());
-            Assert
-                .NotNull(listFromJson
-                    .FirstOrDefault(u => u.Id.Equals(userCreateResult.Id)));
+            Assert.NotNull(listFromJson.FirstOrDefault(u => u.Id.Equals(userCreateResult.Id)));
 
             //Put
-            var updateUserDto =
-                new UserUpdateDTO {
-                    Id = userCreateResult.Id,
-                    Name = Faker.Name.FullName(),
-                    Email = Faker.Internet.Email()
-                };
+            var updateUserDto = new UserUpdateDTO
+            {
+                Id = userCreateResult.Id,
+                Name = Faker.Name.FullName(),
+                Email = Faker.Internet.Email()
+            };
 
-            var stringContent =
-                new StringContent(JsonConvert.SerializeObject(updateUserDto),
-                    Encoding.UTF8,
-                    "application/json");
+            var stringContent = new StringContent(JsonConvert.SerializeObject(updateUserDto), Encoding.UTF8, "application/json");
             response = await client.PutAsync($"{hostApi}/users", stringContent);
             jsonResult = await response.Content.ReadAsStringAsync();
-            var userUpdateResult =
-                JsonConvert.DeserializeObject<UserUpdateResultDTO>(jsonResult);
+            var userUpdateResult = JsonConvert.DeserializeObject<UserUpdateResultDTO>(jsonResult);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotEqual(userCreateResult.Name, userUpdateResult.Name);
@@ -76,28 +67,23 @@ namespace Api.Integration.Test.User
             Assert.Equal(userCreateResult.Id, userUpdateResult.Id);
 
             //Get by id
-            response =
-                await client.GetAsync($"{hostApi}/users/{userUpdateResult.Id}");
+            response = await client.GetAsync($"{hostApi}/users/{userUpdateResult.Id}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
             jsonResult = await response.Content.ReadAsStringAsync();
-            var objectFromJson =
-                JsonConvert.DeserializeObject<UserDTO>(jsonResult);
+            var objectFromJson = JsonConvert.DeserializeObject<UserDTO>(jsonResult);
 
-            Assert.NotNull (jsonResult);
+            Assert.NotNull(jsonResult);
             Assert.Equal(objectFromJson.Name, userUpdateResult.Name);
             Assert.Equal(objectFromJson.Email, userUpdateResult.Email);
             Assert.Equal(objectFromJson.Id, userUpdateResult.Id);
 
             //delete
-            response =
-                await client
-                    .DeleteAsync($"{hostApi}/users/{userUpdateResult.Id}");
+            response = await client.DeleteAsync($"{hostApi}/users/{userUpdateResult.Id}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
             //Get by id after delete
-            response =
-                await client.GetAsync($"{hostApi}/users/{userUpdateResult.Id}");
+            response = await client.GetAsync($"{hostApi}/users/{userUpdateResult.Id}");
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
     }

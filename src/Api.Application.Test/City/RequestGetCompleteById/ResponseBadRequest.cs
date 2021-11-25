@@ -2,47 +2,44 @@ using System;
 using System.Threading.Tasks;
 using Api.Application.Controllers;
 using Api.Domain.DTOs.City;
+using Api.Domain.DTOs.State;
 using Api.Domain.Interfaces.Services.City;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace Api.Application.Test.City.RequestPut
+namespace Api.Application.Test.City.RequestGetCompleteById
 {
     public class ResponseBadRequest
     {
         private CitiesController _controler;
 
-        [Fact(DisplayName = "E possivel realizar o update")]
-        public async Task UpdateResponse()
+        [Fact(DisplayName = "E possivel realizar o get")]
+        public async Task GetResponse()
         {
             var serviceMock = new Mock<ICityService>();
             var name = Faker.Address.City();
             var ibgeId = Faker.RandomNumber.Next(1, 1000);
 
-            serviceMock.Setup(x => x.Put(It.IsAny<CityUpdateDTO>())).ReturnsAsync(new CityUpdateResultDTO
+            serviceMock.Setup(x => x.GetCompleteById(It.IsAny<Guid>())).ReturnsAsync(new CityCompleteDTO
             {
                 Id = Guid.NewGuid(),
                 Name = name,
                 IbgeId = ibgeId,
                 StateId = Guid.NewGuid(),
-                UpdateAt = DateTime.UtcNow
+                State = new StateDTO
+                {
+                    Id = Guid.NewGuid(),
+                    Name = Faker.Address.UsState(),
+                    Sigla = Faker.Address.UsState().Substring(1, 3),
+                }
             });
 
             _controler = new CitiesController(serviceMock.Object);
-            _controler.ModelState.AddModelError("Name", "É um campo obrigatório");
+            _controler.ModelState.AddModelError("Id", "Formato inválido");
 
-            var CityDtoUpdate = new CityUpdateDTO
-            {
-                Id = Guid.NewGuid(),
-                Name = name,
-                IbgeId = ibgeId,
-                StateId = Guid.NewGuid(),
-            };
-
-            var result = await _controler.Put(CityDtoUpdate);
+            var result = await _controler.GetCompleteById(Guid.NewGuid());
             Assert.True(result is BadRequestObjectResult);
-            Assert.False(_controler.ModelState.IsValid);
         }
     }
 }

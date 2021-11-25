@@ -19,9 +19,7 @@ namespace Api.Application.Test.City.RequestGetAll
         {
             var serviceMock = new Mock<ICityService>();
 
-            serviceMock
-                .Setup(x => x.GetAll())
-                .ReturnsAsync(new List<CityDTO> {
+            serviceMock.Setup(x => x.GetAll()).ReturnsAsync(new List<CityDTO> {
                     new CityDTO {
                         Id = Guid.NewGuid(),
                         Name = Faker.Address.City(),

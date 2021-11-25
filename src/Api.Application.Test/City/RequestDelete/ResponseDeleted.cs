@@ -18,18 +18,16 @@ namespace Api.Application.Test.City.RequestPut
         {
             var serviceMock = new Mock<ICityService>();
 
-            serviceMock
-                .Setup(x => x.Delete(It.IsAny<Guid>()))
-                .ReturnsAsync(true);
+            serviceMock.Setup(x => x.Delete(It.IsAny<Guid>())).ReturnsAsync(true);
 
             _controler = new CitiesController(serviceMock.Object);
 
             var result = await _controler.Delete(Guid.NewGuid());
             Assert.True(result is OkObjectResult);
 
-            var resultValue = ((OkObjectResult) result).Value;
-            Assert.NotNull (resultValue);
-            Assert.True((Boolean) resultValue);
+            var resultValue = ((OkObjectResult)result).Value;
+            Assert.NotNull(resultValue);
+            Assert.True((Boolean)resultValue);
         }
     }
 }

@@ -41,7 +41,11 @@ namespace Api.Integration.Test
 
         public async Task AddToken()
         {
-            var loginDto = new LoginDto { Email = "adm@adm.com.br", Password = "123456" };
+            var loginDto = new LoginDto
+            {
+                Email = "adm@adm.com.br",
+                Password = "123456"
+            };
             var result = await PostJsonAsync(loginDto, $"{hostApi}/login", client);
 
             var jsonResult = await result.Content.ReadAsStringAsync();
@@ -49,10 +53,14 @@ namespace Api.Integration.Test
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", loginObject.accessToken);
         }
 
-        public static async Task<HttpResponseMessage>
-        PostJsonAsync(object dataclass, string url, HttpClient client)
+        public static async Task<HttpResponseMessage> PostJsonAsync(object dataclass, string url, HttpClient client)
         {
             return await client.PostAsync(url, new StringContent(JsonConvert.SerializeObject(dataclass), System.Text.Encoding.UTF8, "application/json"));
+        }
+
+        public static async Task<HttpResponseMessage> PutJsonAsync(object dataclass, string url, HttpClient client)
+        {
+            return await client.PutAsync(url, new StringContent(JsonConvert.SerializeObject(dataclass), System.Text.Encoding.UTF8, "application/json"));
         }
 
         public void Dispose()

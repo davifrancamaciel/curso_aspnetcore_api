@@ -6,11 +6,7 @@ namespace Api.Domain.DTOs.ZipCode
     public class ZipCodeCreateDTO
     {
         [Required(ErrorMessage = "CEP é obrigatório")]
-        [
-            StringLength(
-                10,
-                ErrorMessage = "CEP deve ter no máximo {1} caracteres")
-        ]
+        [StringLength(10, ErrorMessage = "CEP deve ter no máximo {1} caracteres")]
         public string ZipCode { get; set; }
 
         [Required(ErrorMessage = "Endereço é obrigatório")]

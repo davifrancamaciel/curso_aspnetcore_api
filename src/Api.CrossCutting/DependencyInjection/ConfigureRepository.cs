@@ -23,7 +23,7 @@ namespace Api.CrossCutting.DependencyInjection
             serviceCollection.AddScoped<IZipCodeRepository, ZipCodeImplementation>();
 
             if (Constants.DataBase.ToUpper().Equals("MYSQL"))
-                serviceCollection.AddDbContext<MyContext>(options => options.UseMySql(Constants.ConnectionStringMySql));//assim
+                serviceCollection.AddDbContext<MyContext>(options => options.UseMySql(Constants.ConnectionStringMySql, new MySqlServerVersion(new Version(8, 0, 21))));//assim
             else
                 serviceCollection.AddDbContext<MyContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("DB_CONNECTION_SQLSERVER"))); //ou assim
         }

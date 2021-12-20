@@ -9,12 +9,7 @@ namespace Api.Domain.DTOs.City
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Nome da cidade é obrigatório")]
-        [
-            StringLength(
-                60,
-                ErrorMessage =
-                    "Nome da cidade deve ter no máximo {1} caracteres")
-        ]
+        [StringLength(60, ErrorMessage = "Nome da cidade deve ter no máximo {1} caracteres")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Código do IBGE é obrigatório")]
